@@ -5,8 +5,8 @@ contract C {
 
     // variable or function with public scope is accessible outside the contract and inside the contract
 
-    uint public globaldata = 100; // state variable -> this global we can access inside any function within this contract 
-    uint private privatevar = 100; // state variable -> this global we can access inside any function within this contract but not outside because of private
+    uint public statedata = 100; // state variable ->  we can access inside any function within this contract 
+    uint private privatevar = 100; // state variable ->  we can access inside any function within this contract but not outside because of private
     uint internal ex = 10; // state ->  within contract, inherited contract not outside contract
     // external variable not usefull because we can't access within contract so
 
@@ -17,16 +17,16 @@ contract C {
     }
     function y() public view returns(uint){
         uint yy = 25; // local variable -> this data also local for this function only
-        return yy + globaldata;
+        return yy + statedata;
     }
 
     function z() public returns(uint){
         uint zz = 25;
-        globaldata = 500; // changing global var here 
+        statedata = 500; // changing state var here 
         // rule : function who change state of contract is not viewable and it always payable or non payable so we cant make this 
         // function as view
         // because to change the state of contract we have to create transaction and to execute it we have to pay gas
-        return zz + globaldata;
+        return zz + statedata;
     }
 
 
