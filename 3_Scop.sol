@@ -55,7 +55,7 @@ contract C {
 
 // public  ->  within contract, outside contract, inherited contract
 // private -> only within contract
-// internal -> within contract, inherited contract
+// internal -> within contract, inherited contract , nit inside contract which create this contract instance
 // external -> only outside contract
 
 
