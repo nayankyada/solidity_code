@@ -1,5 +1,22 @@
 // SPDX-License-Identifier: GPL-3.0
+
+// assume there are two contracts A , B
+// address newContract = new B()
+// any msg.sender statement inside contract B is not sender address but it is address of contract A
+
 pragma solidity >=0.7.0 <0.9.0;
+
+contract CampaignFactory{
+    address[] public deployedCampaigns;
+    function createCampaign(uint _minimum) public {
+        address newCampaign = address(new Campaign(_minimum,msg.sender)); // retrun address 
+        deployedCampaigns.push(newCampaign);
+    }
+
+    function getDeployedCompaigns() public view returns(address[] calldata){
+        return deployedCampaigns;
+    }
+}
 
 contract Campaign{
     struct Request {
@@ -17,8 +34,9 @@ contract Campaign{
     Request[] public requests;
     uint public approversCount = 0;
     mapping(uint => Request) temp;
-    constructor(uint minimum){
-        manager = msg.sender;
+
+    constructor(uint minimum,address creator){
+        manager = creator;
         minimumContribution=minimum;
     }
 
