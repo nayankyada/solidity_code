@@ -15,4 +15,4 @@ contract learnMapping{
     function removeAddress(string memory _addr) public{
         delete myMap[_addr];
     }
-}
+}   
