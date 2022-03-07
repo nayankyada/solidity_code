@@ -3,6 +3,7 @@
 
 //memory
 // solidity manage variables inside memory -> RAM
+// mostly local variable store inside memory
 
 // SPDX-License-Identifier: GPL-3.0
 
