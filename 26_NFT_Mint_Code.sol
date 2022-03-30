@@ -16,8 +16,8 @@ contract Skulls is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable{
     string public contractURI;
     Counters.Counter private _tokenIdCounter;
 
-    constructor(uint256 _royalityFeesInBips,string memory _contractUri) ERC721("Skulls", "SKUL") {
-        royalityFeesInBips - _royalityFeesInBips;
+    constructor(uint256 _royalityFeesInBips,string memory _contractUri) ERC721("", "") {
+        royalityFeesInBips = _royalityFeesInBips;
         contractURI = _contractUri;
         royalityReceiver = msg.sender;
     }
