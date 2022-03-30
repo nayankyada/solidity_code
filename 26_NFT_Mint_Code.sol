@@ -11,9 +11,16 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 contract Skulls is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable{
     using Counters for Counters.Counter;
     uint256 public minRate = 0.01 ether;
+    uint256 royalityFeesInBips;
+    address royalityReceiver;
+    string public contractURI;
     Counters.Counter private _tokenIdCounter;
 
-    constructor() ERC721("Skulls", "SKUL") {}
+    constructor(uint256 _royalityFeesInBips,string memory _contractUri) ERC721("Skulls", "SKUL") {
+        royalityFeesInBips - _royalityFeesInBips;
+        contractURI = _contractUri;
+        royalityReceiver = msg.sender;
+    }
 
     function safeMint(address to,string memory uri) public payable{
         require(msg.value >= minRate,"Not Enough Ether Sent");
@@ -48,6 +55,23 @@ contract Skulls is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable{
         override(ERC721, ERC721Enumerable)
         returns (bool)
     {
-        return super.supportsInterface(interfaceId);
+        return interfaceId == 0x2a55205a ||  super.supportsInterface(interfaceId);
+    }
+
+    function royalityInfo(uint256 _tokenId,uint256 _salePrice) external view returns(address receiver,uint256 royalityAmount) {
+        return (royalityReceiver,calculateRoyality(_salePrice));
+    }
+
+    function calculateRoyality(uint256 _salePrice) view public returns(uint256){
+        return (_salePrice / 10000) * royalityFeesInBips;
+    }
+
+    function setRoyalityInfo(address _receiver,uint256 _royalityFeesInBips) public onlyOwner{
+        royalityReceiver = _receiver;
+        royalityFeesInBips = _royalityFeesInBips;
+    } 
+
+    function setContractURI(string calldata _contractURI) public onlyOwner {
+        contractURI = _contractURI;
     }
 }
