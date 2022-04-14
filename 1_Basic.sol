@@ -8,7 +8,7 @@ contract Basic {
 
     // function function-name(pram-list) scope returns(){
     // statements }
-    function temp() public view returns(uint){
+    function temp() public pure returns(uint){
         // variables writting here are local to this function
         uint a = 10; // local variable
         uint b = 20; // local variable
@@ -16,8 +16,6 @@ contract Basic {
     }
 
     function sum(uint a,uint b) public view returns(uint){
-        uint a = 10; // local variable
-        uint b = 20; // local variable
         return a + b + global; // global is global variable
     }
 }
